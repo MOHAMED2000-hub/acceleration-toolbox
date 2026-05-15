@@ -1,0 +1,14 @@
+name: workshop
+
+channels:
+  - conda-forge
+  - bioconda
+
+dependencies:
+  - fastqc
+  - multiqc
+  - cutadapt
+  - minimap2
+  - samtools
+  - blast
+  - python

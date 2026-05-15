@@ -48,15 +48,20 @@ Check [the actions section](https://github.com/HCEMM/acceleration-toolbox/action
 
 Projects with multiple contributors require a more complex approach. In this section, multiple groups will be working on different parts of a pipeline, and we will be using GitHub to collaborate and manage our work. As explained in [1.](#1-the-version-control-system), we will be using the "fork and pull" workflow, which involves the following steps:
 
-1. [Create fork of the workshop repository](https://github.com/HCEMM/acceleration-toolbox/fork): you now have your own copy of the repository where you can make changes without affecting the original repository. But this repository is currently only on GitHub!
+1. [Create a fork of this repository](https://github.com/HCEMM/acceleration-toolbox/fork): you now have your own copy of the repository where you can make changes without affecting the original repository. But this repository is currently only on GitHub!
 
-2. Clone your forked repository by running `git clone https://github.com/<your-github-username>/acceleration-toolbox`: this will create a local copy of your forked repository on your computer.
+2. Clone your forked repository by running the below command. This will create a local copy of your forked repository on your computer.
+```
+git clone https://github.com/<your-github-username>/acceleration-toolbox
+```
 
 3. Having a local copy on your system makes it easy to work on a project, especially by using [IDEs](https://github.com/HCEMM/sc-tutorials/blob/main/github_tutorial/README.md#21-in-an-ide). Use your preferred IDE to open the local repository, and the SC team will assist in discovering where version control is managed.
 
 ### 3.1. Testing is essential in collaborative or long-term projects
 
-It can also be one of the most boring parts of programming. [GitHub Actions](https://github.com/features/actions) allows for automated workflows on GitHub, such as automated testing of your tools, or automated deployment into, e.g., package managers like Bioconda or PyPI.
+Testing code (also known as [Continuous Integration](https://en.wikipedia.org/wiki/Continuous_integration)) is crucial for maintaining code quality. It can also be one of the most boring parts of programming.
+
+[GitHub Actions](https://github.com/features/actions) allows for automated workflows from your repository on GitHub, such as automated testing of your tools, or automated deployment into, e.g., package managers like Bioconda or PyPI. You actually ran GH actions already, when you set up your GitHub Pages.
 
 ### 3.2. Your task
 
