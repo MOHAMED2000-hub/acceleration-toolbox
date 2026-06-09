@@ -6,6 +6,6 @@ MULTIQC_CONFIG=$2
 
 echo "Generating MultiQC report"
 
-multiqc $RESULTS_DIR -c $MULTIQC_CONFIG -o $RESULTS_DIR/multiqc_report
+multiqc "$RESULTS_DIR" -c "$MULTIQC_CONFIG" -o "$RESULTS_DIR"/multiqc_report
 
 echo "Report assets copied"

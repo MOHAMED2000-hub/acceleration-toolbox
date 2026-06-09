@@ -1,0 +1,13 @@
+Module	Section	Sample Name	Source
+FastQC	all_sections	SRR1039508_R1	/scratch/jsequeira/jsequeira/github/acceleration-toolbox/01_GitHub/results/qc/SRR1039508_R1_fastqc.zip
+FastQC	all_sections	SRR1039508_R2	/scratch/jsequeira/jsequeira/github/acceleration-toolbox/01_GitHub/results/qc/SRR1039508_R2_fastqc.zip
+FastQC	all_sections	SRR1039509_R1	/scratch/jsequeira/jsequeira/github/acceleration-toolbox/01_GitHub/results/qc/SRR1039509_R1_fastqc.zip
+FastQC	all_sections	SRR1039509_R2	/scratch/jsequeira/jsequeira/github/acceleration-toolbox/01_GitHub/results/qc/SRR1039509_R2_fastqc.zip
+FastQC	all_sections	SRR1039512_R1	/scratch/jsequeira/jsequeira/github/acceleration-toolbox/01_GitHub/results/qc/SRR1039512_R1_fastqc.zip
+FastQC	all_sections	SRR1039512_R2	/scratch/jsequeira/jsequeira/github/acceleration-toolbox/01_GitHub/results/qc/SRR1039512_R2_fastqc.zip
+FastQC	all_sections	SRR1039517_R1	/scratch/jsequeira/jsequeira/github/acceleration-toolbox/01_GitHub/results/qc/SRR1039517_R1_fastqc.zip
+FastQC	all_sections	SRR1039517_R2	/scratch/jsequeira/jsequeira/github/acceleration-toolbox/01_GitHub/results/qc/SRR1039517_R2_fastqc.zip
+FastQC	all_sections	SRR1039520_R1	/scratch/jsequeira/jsequeira/github/acceleration-toolbox/01_GitHub/results/qc/SRR1039520_R1_fastqc.zip
+FastQC	all_sections	SRR1039520_R2	/scratch/jsequeira/jsequeira/github/acceleration-toolbox/01_GitHub/results/qc/SRR1039520_R2_fastqc.zip
+FastQC	all_sections	SRR1039521_R1	/scratch/jsequeira/jsequeira/github/acceleration-toolbox/01_GitHub/results/qc/SRR1039521_R1_fastqc.zip
+FastQC	all_sections	SRR1039521_R2	/scratch/jsequeira/jsequeira/github/acceleration-toolbox/01_GitHub/results/qc/SRR1039521_R2_fastqc.zip
