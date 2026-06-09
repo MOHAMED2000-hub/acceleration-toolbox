@@ -48,31 +48,6 @@ Check [the actions section](https://github.com/HCEMM/acceleration-toolbox/action
 
 Projects with multiple contributors require a more complex approach. In this section, multiple groups will be working on different parts of a pipeline, and we will be using GitHub to collaborate and manage our work. Right now, the pipeline is not working:
 
-![Pipeline](https://github.com/ORG/REPO/actions/workflows/github-pipeline-ci.yml/badge.svg)
-
-As explained in [1.](#1-the-version-control-system), we will be using the "fork and pull" workflow, which involves the following steps:
-
-1. [Create a fork of this repository](https://github.com/HCEMM/acceleration-toolbox/fork): you now have your own copy of the repository where you can make changes without affecting the original repository. But this repository is currently only on GitHub!
-
-2. Clone your forked repository by running the below command. This will create a local copy of your forked repository on your computer.
-```
-git clone https://github.com/<your-github-username>/acceleration-toolbox
-```
-
-3. Having a local copy on your system makes it easy to work on a project, especially by using [IDEs](https://github.com/HCEMM/sc-tutorials/blob/main/github_tutorial/README.md#21-in-an-ide). Use your preferred IDE to open the local repository, and the SC team will assist in discovering where version control is managed.
-
-### 3.1. Testing is essential in collaborative or long-term projects
-
-Testing code (also known as [Continuous Integration](https://en.wikipedia.org/wiki/Continuous_integration)) is crucial for maintaining code quality. It can also be one of the most boring parts of programming.
-
-[GitHub Actions](https://github.com/features/actions) allows for automated workflows from your repository on GitHub, such as automated testing of your tools, or automated deployment into, e.g., package managers like Bioconda or PyPI. You actually ran GH actions already, when you set up your GitHub Pages.
-
-### 3.2. Your task
-
-We have multiple groups for multiple different tasks. Each group will be working on a different part of the pipeline, and you will be collaborating with your group members to complete the task.
-
-#### Groups
-
 | Group | Task | Difficulty | Status |
 |---------|---------|---------|---------|
 | 1 | Reads Quality Check | Easy | ![Group1](https://github.com/HCEMM/acceleration-toolbox/actions/workflows/group1-ci.yml/badge.svg) |
@@ -81,6 +56,39 @@ We have multiple groups for multiple different tasks. Each group will be working
 | 4 | Gene Quantification | Easy | ![Group4](https://github.com/HCEMM/acceleration-toolbox/actions/workflows/group4-ci.yml/badge.svg) |
 | 5 | Final Report | Medium | ![Group5](https://github.com/HCEMM/acceleration-toolbox/actions/workflows/group5-ci.yml/badge.svg) |
 | All Groups | Complete Pipeline | - | ![Main](https://github.com/HCEMM/acceleration-toolbox/actions/workflows/full-pipeline.yml/badge.svg) |
+
+### 3.1. Your task
+
+As explained in [1.](#1-the-version-control-system), we will be using the "fork and pull" workflow to fix/complete this pipeline. This exercise will involve the following steps:
+
+1. [Create a fork of this repository](https://github.com/HCEMM/acceleration-toolbox/fork), **while deselecting the option "Copy the main branch only"**. You now have your own copy of the repository where you can make changes without affecting the original repository. But this repository is currently only on GitHub!
+<br/>
+Before doing any new changes, go to the "Actions" tab of your forked repository, and click on "I understand my workflows, go ahead and enable them". This will be important later on, when you make changes and want to check if the tests pass.
+
+2. Clone your forked repository by running the below command. This will create a local copy of your forked repository on your computer.
+```
+git clone https://github.com/<your-github-username>/acceleration-toolbox
+```
+
+3. Having a local copy on your system makes it easy to work on a project, especially by using [IDEs](https://github.com/HCEMM/sc-tutorials/blob/main/github_tutorial/README.md#21-in-an-ide). Use your preferred IDE to open the local repository, and the SC team will assist in discovering where version control is managed.
+
+4. Chose your group from the table above, and checkout the corresponding branch (e.g., `git checkout group3` for Group 3). This will allow you to work on the specific part of the pipeline assigned to your group.
+
+5. Make the necessary changes to complete your task. This may involve editing scripts, adding new files, or modifying existing ones.
+
+6. Once you have made your changes, add, commit, and push them with a descriptive message (e.g., "Add command for Group 3"). This will save your changes in the remote repository, and will trigger the tests.
+
+7. If the tests pass, you can create a pull request, by going to `https://github.com/iquasere/acceleration-toolbox/tree/group3` (e.g.) and clicking on "Compare & pull request". This will notify the maintainers of the original repository about your changes, and they can review and merge them if they are satisfactory. 
+<br/>
+If the tests do not pass, you will need to check the error messages, fix the issues, and repeat steps 5-7 until the tests pass.
+
+8. Check the badge again to see if the tests are passing, and if so, your code will be merged into the main repository, and your contribution will become part of the main pipeline!
+
+### 3.2. Testing is essential in collaborative or long-term projects
+
+Testing code (also known as [Continuous Integration](https://en.wikipedia.org/wiki/Continuous_integration)) is crucial for maintaining code quality. This pipeline is being tested using GitHub Actions, which allows us to automatically run tests every time a change is made to the code. This allows us to assess how changes affect the overall pipeline, and to ensure that the code is working as expected.
+
+[GitHub Actions](https://github.com/features/actions) allows for automated workflows from your repository on GitHub, such as automated testing of your tools, or automated deployment into, e.g., package managers like Bioconda or PyPI. You actually ran GH actions already, when you set up your GitHub Pages.
 
 ------------------
 |Previous|Home|Next|
