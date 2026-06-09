@@ -8,7 +8,7 @@ echo "Generating MultiQC report"
 
 # GROUP 5 - WRITE HERE THE COMMAND TO RUN MULTIQC
 # THE MULTIQC COMMAND SHOULD TAKE THE RESULTS DIRECTORY AS INPUT, THE MULTIQC CONFIG FILE AS CONFIG, AND OUTPUT THE REPORT TO $RESULTS_DIR/multiqc_report
-multiqc "$RESULTS_DIR" -c "$MULTIQC_CONFIG" -o "$RESULTS_DIR"/multiqc_report
+
 
 # check if multiqc_report directory was generated, and exit code 1 if not
 if [ ! -d "$RESULTS_DIR/multiqc_report" ]; then
