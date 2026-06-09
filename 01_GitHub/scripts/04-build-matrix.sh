@@ -2,17 +2,18 @@
 set -euo pipefail
 
 RESULTS_DIR=$1
+OUTPUT_DIR=$2
 N_FILES=12
 
 echo "Counting matches into summary matrix"
 
 # GROUP 4 - WRITE HERE THE COMMAND TO RUN THE PYTHON SCRIPT THAT BUILDS THE SUMMARY MATRIX
-# THE PYTHON SCRIPT TAKES THE RESULTS DIRECTORY AS A PARAMETER
+# THE PYTHON SCRIPT TAKES THE RESULTS AND OUTPUT DIRECTORIES AS A PARAMETERS
 
 
 # check if the matrix file was created successfully
-if [ ! -f "$RESULTS_DIR/matches_summary.csv" ]; then
-    echo "Error: matches_summary.csv was not created in $RESULTS_DIR."
+if [ ! -f "$OUTPUT_DIR/matches_summary.csv" ]; then
+    echo "Error: matches_summary.csv was not created in $OUTPUT_DIR."
     exit 1
 fi
 

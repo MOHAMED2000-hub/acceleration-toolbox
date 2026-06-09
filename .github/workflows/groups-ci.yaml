@@ -80,7 +80,7 @@ jobs:
 
       - name: Run build matrix
         shell: micromamba-shell {0}
-        run: bash 01_GitHub/scripts/04-build-matrix.sh 01_GitHub/ci_input
+        run: bash 01_GitHub/scripts/04-build-matrix.sh 01_GitHub/ci_input test_output
 
   multiqc:
     runs-on: ubuntu-latest
@@ -97,4 +97,4 @@ jobs:
 
       - name: Run MultiQC
         shell: micromamba-shell {0}
-        run: bash 01_GitHub/scripts/05-build-report.sh 01_GitHub/ci_input 01_GitHub/data/multiqc_config.yaml
+        run: bash 01_GitHub/scripts/05-build-report.sh 01_GitHub/ci_input test_output 01_GitHub/data/multiqc_config.yaml
