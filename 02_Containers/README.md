@@ -145,4 +145,4 @@ CMD ["[tool-or-executable]", "[flag]", "[argument]"]
 ------------------
 |Previous|Home|Next|
 |--------|----|----|
-|[GitHub](../01_GitHub/README.md)|[Home](../README.md)|[CI/CD](../03_CICD/README.md)
+|[GitHub](../01_GitHub/README.md)|[Home](../README.md)|[Workflow Managers](../03_Workflow_Managers/README.md)
