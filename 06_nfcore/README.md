@@ -188,7 +188,10 @@ One of the main benefits of nf-core is standardized output structures. When the 
 <img width="1640" height="854" alt="image" src="https://github.com/user-attachments/assets/062e217a-a6b1-4853-9370-6118dd57a751" />
 *MultiQC report*
 
-
+------------------
+|Previous|Home|Next|
+|--------|----|----|
+|[Conda](../03_nf-test/README.md)|[Home](../README.md)|
 
 
 
