@@ -9,10 +9,6 @@ In previous sessions, we containerized individual bioinformatics tools. Here, we
 ### Part 1: Pipeline Architecture
 A standard Nextflow repository relies on two central files to control execution and configuration, isolating the "how" from the "where."
 
-**Exapmple DAG architecture**
-
-<img width="691" height="686" alt="flowchart" src="https://github.com/user-attachments/assets/78237e23-4b0c-42f4-bab8-e6e8cd9f037a" />
-
 
 Directory Overview:
 - ```main.nf``` (The master script)
@@ -23,11 +19,11 @@ Directory Overview:
 
 -----------------------
 
-1. ```nextflow.config``` (Infrastructure and Resources)
+### 1. ```nextflow.config``` (Infrastructure and Resources)
 
 This file dictates execution rules: job scheduling, CPU/RAM allocation, and container integration.
 
-<details><summary>Show me the ```nextflow.config``` file!</summary>
+<details><summary>Show me the nextflow.config file!</summary>
     
 ```
 // 1. Executor Settings (HPC Job Scheduler)
@@ -78,11 +74,11 @@ apptainer {
 
 ----------
 
-2. ```main.nf``` (The Master Workflow)
+### 2. ```main.nf``` (The Master Workflow)
 
 This script orchestrates data flow using *Nextflow Channels*. It imports modules and wires tool outputs to downstream inputs.
 
-<details><summary>Show me the ```main.nf``` file!</summary>
+<details><summary>Show me the main.nf file!</summary>
     
 ```
 #!/usr/bin/env nextflow
@@ -151,6 +147,11 @@ workflow {
 
 ### Part 2: Writing Nextflow Processes | Nextflow Directives & Data Types
 
+**Exapmple DAG architecture**
+
+<img width="691" height="686" alt="flowchart" src="https://github.com/user-attachments/assets/78237e23-4b0c-42f4-bab8-e6e8cd9f037a" />
+
+
 A Nextflow process wraps your Bash or R scripts into reusable modules. To write effective modules, you must understand Nextflow directives and data types.
 
 **1. Directives and Task Variables**
@@ -169,16 +170,13 @@ Directives control the environment and behavior of your specific process.
 |Directive|Function|Example|
 |---------|--------|-------|
 |```task.cpus``` and ```task.memory```|These are dynamic global variables. Instead of hardcoding threads 4 in your Bash script, use ${task.cpus}.| e.g. ```fastqc -t ${task.cpus} reads.fastq.gz```|
-|```tag```|Customizes terminal logs to show exactly which sample is currently processing.
-|
-|
+|```tag```|Customizes terminal logs to show exactly which sample is currently processing.| ```[3f/55560c] FASTQC (FastQC on SRR1039520)```|
+|```container```|Specifies the exact image to pull for this step if not globally defined.|```container 'biocontainers/fastqc:v0.11.9_cv8'```|
+|```errorStrategy```|Defines pipeline behavior upon task failure (```terminate```, ```ignore```, ```retry```).|```errorStrategy 'retry'```|
 
+<img width="545" height="212" alt="image" src="https://github.com/user-attachments/assets/ebdadd10-a0df-42e0-a157-f3619badf04e" />
 
-**C. Process Directives**
-- ```tag```: This is used for logging. Instead of Nextflow printing [7b/3a1c9f] process > FASTQC (1) to the terminal, you can add tag "Running FastQC on $sample_id". The terminal will then print exactly which sample is currently being processed.
-- ```container```: If you aren't defining your Apptainer/Docker containers globally in the nextflow.config, you define them at the process level using this directive (e.g., ```container 'biocontainers/fastqc:v0.11.9_cv8'```).
-- ```errorStrategy```: Tells Nextflow what to do if a tool crashes. Options include ```terminate``` (default, kills the pipeline), ```ignore``` (skips it and keeps going), or ```retry```.
-- ```maxRetries```: Used in tandem with errorStrategy: ```retry```. You can tell Nextflow to try running a failed job 2 or 3 times before finally giving up (great for HPC environments where nodes drop randomly).
+-----------------------
 
 **2. Input and Output Types**
 Nextflow needs to know exactly what kind of data is flowing into and out of your process so it can stage the files correctly in the temporary work directories.
@@ -192,14 +190,18 @@ Nextflow needs to know exactly what kind of data is flowing into and out of your
 
 ----------------------
 
-### Step 3: Group Work — Build Your Processes!
-Now it is time to get hands-on. Break into your assigned groups. Your goal is to take your hollow .nf process files and turn them into fully functional Nextflow modules, utilizing the exact container commands you perfected earlier.
+### Part 3: Group Assignment
+> *Your task is to convert hollow ```.nf``` templates into functional modules using your optimized container commands.*
 
 The Assignments
-- Group 1: Quality Control → Complete fastqc.nf and multiqc.nf
-- Group 2: Read Trimming → Complete trimming.nf
-- Group 3: Quantification → Complete salmon.nf (both the indexing and quantification steps)
-- Group 4: Differential Expression → Complete r_analysis.nf (using the R limma package)
+- Group 1: Quality Control | Complete ```fastqc.nf```
+- Group 2: Read Trimming | Complete ```trimming.nf```
+- Group 3: Quantification | Complete ```salmon.nf``` (*only quantification*)
+- Group 4: Differential Expression | Complete ```r_analysis.nf``` (using the R limma package)
+
+> All of these processes rely on the containers built and pushed to [DockerHub](https://hub.docker.com/repository/docker/hcemm/bioinfo-workshop) in the previous part.
+
+
 
 ### Step 4: Version Control and CI/CD
 Once your group has a working process, it is time to integrate it into the main pipeline. We will follow standard, real-world software development practices.
