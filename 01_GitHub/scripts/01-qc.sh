@@ -1,10 +1,6 @@
 #!/bin/bash
 set -euo pipefail
 
-# Activate conda environment
-source $(conda info --base)/etc/profile.d/conda.sh
-conda activate workshop
-
 
 READS_DIR=$1
 RESULTS_DIR=$2/qc
