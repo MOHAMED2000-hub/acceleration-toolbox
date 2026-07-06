@@ -5,6 +5,7 @@ set -euo pipefail
 source $(conda info --base)/etc/profile.d/conda.sh
 conda activate workshop
 
+
 READS_DIR=$1
 RESULTS_DIR=$2/qc
 THREADS=$3
