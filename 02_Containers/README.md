@@ -31,19 +31,19 @@ The starting point or base image.
 FROM ubuntu:22.04
 ```
 
-Python:
+For ML pipelines, you might use a base image that already has Python and some libraries installed:
 
 ```dockerfile
 FROM python:3.10-slim
 ```
 
-R:
+For R pipelines, you might use a base image that already has R installed:
 
 ```dockerfile
 FROM rocker/r-ver:4.3.1
 ```
 
-Conda:
+Running conda environments:
 
 ```dockerfile
 FROM continuumio/miniconda3:latest
