@@ -1,6 +1,6 @@
-## Bioinformatics Containers
+# Bioinformatics Containers
 
-### 1. Why Containers?
+## 1. Why Containers?
 
 Have you ever tried to run a tool that worked perfectly on a colleague's laptop, only to face hours of installation errors on your own machine? This is the exact problem containers solve.
 
@@ -9,140 +9,251 @@ In bioinformatics, reproducibility is critical. A container is a standard unit o
 In this workshop, we will use containers to build reproducible steps of a Nextflow pipeline.
 
 Why are they useful?
+
 - **Reproducibility**: A containerized pipeline run today will produce the exact same results 5 years from now.
 - **Dependency Isolation**: Need a specific version for one tool? Containers keep their environments entirely separated.
 - **Portability**: You can move the exact same environment from your laptop to a massive HPC cluster or the cloud.
 
+## 2. Key Concepts and DockerHub
 
-
-### Containers in Nextflow
-
-Nextflow integrates seamlessly with containers. Instead of installing tools locally, each process in a pipeline can spin up its own container, run the job, and shut down:
-
-```{groovy}
-process FASTQC {
-    container 'your-dockerhub-username/fastqc:latest'
-    
-    script:
-    """
-    fastqc input.fastq
-    """
-}
-```
-
-### 2. Key conepts and the Docker Hub
 - **Image**: A read-only blueprint containing the OS, software, and dependencies.
 - **Container**: A running, active instance of an image.
 - **Dockerfile**: A simple text script containing the instructions used to build an image.
-- **Docker Hub**: Think of it as "GitHub for Docker images." It is a public registry where developers upload their built images so others can download (pull) and use them. [DockerHub](https://hub.docker.com)
+- **![DockerHub](https://github.com/user-attachments/assets/0d7ffc96-c457-4631-b3cb-e7d332f6d2c8)**: "GitHub for Docker images." It is a public registry where developers upload their built images so others can download (pull) and use them.
 
-<img width="1200" height="594" alt="image" src="https://github.com/user-attachments/assets/0d7ffc96-c457-4631-b3cb-e7d332f6d2c8" />
+## 3. Basic Structure of a Dockerfile
 
-### 3. Basic Structure of a Dockerfile
+### FROM
 
-A Dockerfile is built layer by layer using specific keywords:
-- **FROM**: The starting point or base image (e.g., ubuntu:22.04 or python:3.10-slim). Every Dockerfile must start with a FROM statement.
-- **RUN**: Executes terminal commands to install software or download files (e.g., RUN apt-get install -y wget).
-- **WORKDIR**: Sets the working directory inside the container.
-- **COPY**: Copies files from your local machine into the container.
-- **CMD**: The default command the container runs if no other command is provided.
+The starting point or base image.
 
-<img width="1184" height="831" alt="image" src="https://github.com/user-attachments/assets/2215ba89-df63-43b6-a8a8-818ebf3742f6" />
-
-### 4. Building & Running: Docker vs. Apptainer (HPC)
-**If you have Root privileges (e.g., on your personal laptop):**
-You would typically build and test containers using Docker directly:
-```
-docker build -t my-tool:latest .
-docker run --rm my-tool:latest
+```dockerfile
+FROM ubuntu:22.04
 ```
 
-**Working on an HPC (Workshop Reality):** \
-Docker requires root (administrator) privileges to run, which poses a massive security risk on shared High-Performance Computing (HPC) clusters. Therefore, HPCs use Apptainer (formerly named Singularity).
+Python:
 
-Apptainer can download and run Docker images without requiring root privileges.
-
-The Problem: If we don't have root on the HPC, how do we build our Docker images?
-> The Solution: We will write the code, push it to GitHub, and let an automated GitHub workflow build it and push it to Docker Hub for us!
-
-
-------------------
-
-### 5. Building Your Own Containers
-You will work in groups. Each group is responsible for creating a working Docker container for one step of our RNA-seq workflow:
-1. Quality control --> ```FastQC``` and ```MultiQC```
-2. Read trimming --> ```trimmomatic```
-3. Alignment + quantification (psueodalignment) --> ```Salmon```
-4. Differential expression analysis --> ```R + limma```
-
-### The workflow
-
-1. Write your Dockerfile: Your group will be given an incomplete or empty Dockerfile. Use the examples below to fill it out and make it working.
-2. Commit and Push: Push your completed Dockerfile to your group's specific branch on the workshop's GitHub repository.
-3. Wait for the Automated Build: Once pushed, a GitHub Action will automatically trigger. It will read your Dockerfile, build the image, and push it directly to Docker Hub. (Check the "Actions" tab in GitHub to watch it build!)
-4. Test on the HPC with Apptainer: Once the build is successful, log into the HPC. Use Apptainer to pull your new image from Docker Hub and test if the tool installed correctly by checking its version.
-
-### Testing Command Example
-Use this command to test your automatically built image on the HPC:
+```dockerfile
+FROM python:3.10-slim
 ```
+
+R:
+
+```dockerfile
+FROM rocker/r-ver:4.3.1
+```
+
+Conda:
+
+```dockerfile
+FROM continuumio/miniconda3:latest
+```
+
+**3.1. Why is it better to use `python:slim` instead of full Ubuntu?**
+
+**3.2. How do you know which base image to use for your tool?**
+
+### RUN
+
+```dockerfile
+RUN apt-get update && apt-get install -y fastqc
+```
+
+Recommended:
+
+```dockerfile
+RUN apt-get update && \
+    apt-get install -y fastqc && \
+    rm -rf /var/lib/apt/lists/*
+```
+
+**3.3. Why is it important to clean up the cache after installing packages?**
+
+**3.4. Why do we delete `/var/lib/apt/lists/*`?**
+
+### WORKDIR
+
+```dockerfile
+WORKDIR /data
+```
+
+**3.5. What happens if you don't set `WORKDIR`?**
+
+### COPY
+
+```dockerfile
+COPY script.sh /usr/local/bin/script.sh
+```
+
+**3.6. Why is `COPY` preferred over downloading files inside the container?**
+
+### ENV
+
+```dockerfile
+ENV PATH="/usr/local/bin:${PATH}"
+ENV LC_ALL=C
+```
+
+**3.7. Why is setting `LC_ALL` sometimes important in bioinformatics?**
+
+### CMD vs ENTRYPOINT
+
+```dockerfile
+CMD ["fastqc", "--version"]
+```
+
+```dockerfile
+ENTRYPOINT ["fastqc"]
+```
+
+**3.8. When would `ENTRYPOINT` be better than `CMD` in a bioinformatics container?**
+
+## 4. Building & Running: Docker vs. Apptainer
+
+```bash
+cd 02_Containers/seqkit_container
+
+docker compose build          # or docker compose up --build
+
+docker run --rm seqkit-workshop seqkit --help
+# or
+docker compose run seqkit seqkit --help
+```
+
+**4.1. Why is `--rm` useful when testing?**
+
+Docker requires root privileges, which is why most HPC systems use **Apptainer** instead.
+
+## 5. Building Your Own Containers
+
+Each group builds one container:
+
+| Group | Tool |
+|------|------|
+| Group 1 | FastQC + MultiQC |
+| Group 2 | Trimmomatic |
+| Group 3 | Salmon |
+| Group 4 | R + limma |
+
+### Workflow
+
+1. Write your Dockerfile.
+2. Commit and push.
+3. GitHub Actions builds and pushes the image.
+4. Test with Apptainer.
+
+```bash
 ml apptainer
 apptainer exec docker://hcemm/bioinfo-workshop:group_tag installed_tool --version
 ```
 
-|Group|Tool|DockerHub Tag|
-|------|--------|----------|
-| Group1 | FastQC + MultiQC | hcemm/bioinfo-workshop:fastqc|
-| Group2| trimmomatic | hcemm/bioinfo-workshop:trimming|
-| Group3 | salmon | hcemm/bioinfo-workshop:salmon|
-| Group4 | R + limma | hcemm/bioinfo-workshop:limma|
+Questions:
 
+- 5.1. What is the difference between an image and a container?
+- 5.2. Why do we need containers on HPC?
+- 5.3. Why do containers improve reproducibility?
+- 5.4. What happens if two tools require different Python versions?
+- 5.5. Could you fully reproduce a container without internet access?
+- 5.6. What is the weakest point of container reproducibility?
 
------------------------
+## Answers
 
-### 6. Example DockerFile
+<details>
+<summary><strong>3.1</strong></summary>
 
-```sh
-# 1. BASE IMAGE (Required)
-# Always start here. What OS or programming language environment do you need?
-FROM [base-image]:[version-tag]
+`python:slim` is much smaller than Ubuntu, resulting in faster builds, downloads, and fewer unnecessary packages.
 
-# 2. METADATA (Optional but good practice)
-# Add labels for author, version, or description.
-LABEL maintainer="[your-name]" \
-      description="[what-this-container-does]"
+</details>
 
-# 3. ENVIRONMENT VARIABLES (Optional)
-# Set paths, locale settings, or flags (e.g., to stop interactive prompts during install).
-ENV [VARIABLE_NAME]="[value]"
+<details>
+<summary><strong>3.2</strong></summary>
 
-# 4. INSTALL DEPENDENCIES (Required)
-# Update the package manager, install your required tools, and CLEAN UP cache 
-# to keep the image size as small as possible. Combine into one RUN statement with &&.
-RUN [update-command] && \
-    [install-command] [dependency-1] [dependency-2] && \
-    [cleanup-command]
+Choose the image closest to your software ecosystem (Python, R, Conda, BioContainers, etc.).
 
-# 5. WORKING DIRECTORY (Recommended)
-# Set the default directory where all subsequent commands will be run.
-# If it doesn't exist, Docker creates it.
-WORKDIR /[directory-name]
+</details>
 
-# 6. ADD LOCAL FILES (Optional)
-# Copy scripts, code, or configuration files from your computer/repo into the container.
-COPY [local-path-to-file] [container-destination-path]
+<details>
+<summary><strong>3.3</strong></summary>
 
-# 7. EXECUTION COMMAND (Required)
-# The default command that runs when the container starts.
-# Use the "exec form" (JSON array) for cleaner signal handling.
-CMD ["[tool-or-executable]", "[flag]", "[argument]"]
+Cleaning the cache reduces image size and removes unnecessary temporary files.
 
-# (Alternative to CMD) 
-# Use ENTRYPOINT if the container is designed to run ONLY one specific tool, 
-# treating any extra arguments passed during 'docker run' as arguments for that tool.
-# ENTRYPOINT ["[tool-or-executable]"]
+</details>
+
+<details>
+<summary><strong>3.4</strong></summary>
+
+`/var/lib/apt/lists/` contains package indexes that are no longer needed after installation.
+
+</details>
+
+<details>
+<summary><strong>3.5</strong></summary>
+
+Without `WORKDIR`, commands execute in `/`, making relative paths less predictable.
+
+</details>
+
+<details>
+<summary><strong>3.6</strong></summary>
+
+`COPY` keeps builds reproducible and avoids relying on external downloads.
+
+</details>
+
+<details>
+<summary><strong>3.7</strong></summary>
+
+`LC_ALL=C` ensures consistent locale-dependent behavior such as sorting.
+
+</details>
+
+<details>
+<summary><strong>3.8</strong></summary>
+
+Use `ENTRYPOINT` when the container is dedicated to running a single application.
+
+</details>
+
+<details>
+<summary><strong>4.1</strong></summary>
+
+`--rm` automatically removes the temporary container after execution.
+
+</details>
+
+<details>
+<summary><strong>5.1–5.6</strong></summary>
+
+- Image = blueprint; Container = running instance.
+- HPC uses containers for reproducibility and software isolation.
+- Containers isolate dependencies.
+- Different Python versions can coexist in separate containers.
+- Full reproducibility without internet requires all dependencies to already be inside the image.
+- The weakest point is reliance on external repositories and downloads during image builds.
+
+</details>
+
+## 6. Example Dockerfile
+
+```dockerfile
+FROM ubuntu:22.04
+
+LABEL maintainer="your-name" \
+      description="Example container"
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && \
+    apt-get install -y wget && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /work
+
+COPY script.sh /work/
+
+CMD ["bash"]
 ```
 
-------------------
-|Previous|Home|Next|
-|--------|----|----|
-|[GitHub](../01_GitHub/README.md)|[Home](../README.md)|[Workflow Managers](../03_Workflow_Managers/README.md)
+| Previous | Home | Next |
+|-----------|------|------|
+| [GitHub](../01_GitHub/README.md) | [Home](../README.md) | [Workflow Managers](../03_Workflow_Managers/README.md) |
