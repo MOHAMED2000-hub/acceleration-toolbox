@@ -1,0 +1,20 @@
+channels:                   # Defines where Conda searches for packages.
+  - conda-forge
+  - bioconda
+  - defaults
+
+channel_priority: strict    # Always prefers packages from higher-priority channels, avoiding dependency conflicts.
+
+solver: libmamba            # Uses the much faster libmamba dependency solver instead of the classic solver.
+
+auto_activate_base: false   # Don't automatically activate the base environment when opening a new shell.
+
+show_channel_urls: true     # Shows the channel URL when displaying packages, which is useful for debugging.
+
+envs_dirs:                  # Defines where Conda stores environments. The default is `~/.conda/envs`, but this can be changed to a different location, to avoid cluttering the home directory.
+  - ~/conda/envs
+
+pkgs_dirs:                  # Defines where Conda stores downloaded packages. The default is `~/.conda/pkgs`, but this can be changed to a different location, to avoid cluttering the home directory.
+  - ~/conda/pkgs
+
+always_yes: false           # Automatically answers "yes" to all prompts.

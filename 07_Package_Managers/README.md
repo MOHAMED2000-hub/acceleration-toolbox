@@ -215,6 +215,12 @@ In practice, creating a new environment is often faster than troubleshooting a h
 
 ---
 
+## The .condarc file
+
+The `.condarc` file is a configuration file for Conda. It allows you to customize Conda's behavior, such as specifying channels, setting environment and package directories, and enabling or disabling certain features. Users can create a `.condarc` file in their home directory (`~/.condarc`) to apply settings globally, or in a specific environment to apply settings only to that environment.
+
+An example with the most common settings is provided [here](https://github.com/HCEMM/acceleration-toolbox/blob/main/07_Package_Managers/.condarc).
+
 # pip
 
 ## Introduction
