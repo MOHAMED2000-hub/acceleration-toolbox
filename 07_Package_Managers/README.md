@@ -300,4 +300,4 @@ pip install -r requirements.txt
 
 # NextFlow with Conda
 
-
+The pipeline has already been configured to use Conda environments. Run as `nextflow run main.nf -profile slurm,conda`.

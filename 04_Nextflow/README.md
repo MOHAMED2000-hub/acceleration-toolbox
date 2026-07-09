@@ -188,6 +188,27 @@ Driven by the ```publishDir``` directive, this is where your clean, final data l
 
 **Congratulations! You have successfully built, containerized, and automated a collaborative bioinformatics workflow!**
 
+## Running Nextflow with profiles
+
+First, copy the files from /common
+```
+cp -r /common/2nd_workshop/data /scratch/your_group
+```
+Then, run the pipeline with the following command:
+```
+conda activate nextflow
+nextflow run main.nf -profile slurm,apptainer
+```
+To inspect the runs
+```
+nextflow log
+```
+For a specific
+```
+nextflow log <run_name>
+```
+Otherwise, inspect files/folders in results/work directories. The results folder will contain the final outputs, while the work folder will contain intermediate files and logs.
+
 ------------------
 |Previous|Home|Next|
 |--------|----|----|
