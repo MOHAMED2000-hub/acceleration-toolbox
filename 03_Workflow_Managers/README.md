@@ -71,6 +71,45 @@ This is a fundamental pattern for parallelizing data science workflows:
 - Process: Run the identical analysis step on each chunk simultaneously in parallel.
 - Gather: Combine the independent results back together for the final analysis.  
 
+## Nextflow - Final Exercise
+
+Create a process for seqkit to transform the fastq files to fasta format.
+
+---
+
+### Docker section
+
+1. Create a DockerHub account;
+
+2. Create a Dockerfile for seqkit (can combine with `conda install`);
+
+3.  Compile the image on your machine;
+
+4.  Push to Dockerhub (`docker login`, `docker push`)
+
+---
+
+### Nextflow section
+
+1. Create the process `.nf` file with corresponding inputs/outputs, script and "save to output dir" directives;
+
+2. Add the requirements for cpus and memory on the corresponding configuration;
+
+3. Add to the config files for conda and container;
+
+4. Execute and test it.
+
+---
+
+### GitHub section
+
+1. Commit the changes to your repository;
+
+2. Pull from HCEMM repo;
+
+3. Try a merge, and fix the conflicts;
+
+4. Do the pull request.
 
 ------------------
 |Previous|Home|Next|
