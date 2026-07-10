@@ -78,6 +78,14 @@ pip install nf-core
 conda create -n nf-core python=3.10 nf-core -c bioconda
 conda activate nf-core
 ```
+**NOTE: nf-core requires NextFlow<=24:** `conda install nextflow=24.10.5`
+
+```
+conda create -n nextflow_new \
+    python=3.11 \
+    nextflow=24 \
+    nf-core
+```
 
 **Essential CLI commands**
 - ```nf-core pipeline list```: Displays a dynamically updated list of all available pipelines in the nf-core repository. It shows the latest stable release version, when it was last updated, and whether it has been downloaded locally.
